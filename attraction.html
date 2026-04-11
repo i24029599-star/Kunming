@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attractions - Discover Kunming</title>
+    <style>
+        /* Import Google Font */
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;800&display=swap');
+
+        :root {
+            --primary: #0284c7;
+            --primary-light: #38bdf8;
+            --primary-dark: #0c4a6e;
+            --bg-color: #f0f9ff;
+            --text-dark: #334155;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ----- Navigation Bar ----- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 12px 0;
+            /* Scrolled state as default since page is not a hero full-screen */
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(2, 132, 199, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--primary-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-dark);
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--primary-light);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* ----- Page Header ----- */
+        .page-header {
+            padding: 160px 0 60px;
+            text-align: center;
+            background: linear-gradient(180deg, #e0f2fe 0%, var(--bg-color) 100%);
+            position: relative;
+        }
+
+        .page-blob {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 300px;
+            background: rgba(56, 189, 248, 0.2);
+            filter: blur(100px);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .section-title {
+            position: relative;
+            z-index: 1;
+            font-size: 3.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+        }
+
+        .section-subtitle {
+            position: relative;
+            z-index: 1;
+            color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        /* ----- Main Attractions Grid ----- */
+        .attractions-list-section {
+            padding: 40px 0 100px;
+        }
+
+        .advanced-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .tour-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            overflow: hidden;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 20px 40px -10px rgba(2, 132, 199, 0.08);
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tour-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 60px -15px rgba(2, 132, 199, 0.2);
+            border-color: rgba(56, 189, 248, 0.5);
+        }
+
+        .tour-image-container {
+            width: 100%;
+            height: 480px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tour-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .tour-card:hover .tour-image {
+            transform: scale(1.08);
+        }
+
+        .tour-content {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tour-tag {
+            align-self: flex-start;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 6px 15px;
+            border-radius: 50px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tour-title {
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .tour-desc {
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            line-height: 1.6;
+            font-weight: 300;
+            flex-grow: 1;
+            margin-bottom: 25px;
+        }
+
+        .tour-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(2, 132, 199, 0.1);
+            padding-top: 20px;
+        }
+
+        .tour-location {
+            display: flex;
+            align-items: center;
+            color: var(--primary);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .tour-location svg {
+            margin-right: 6px;
+        }
+
+        /* ----- Footer Section ----- */
+        .footer {
+            background: var(--primary-dark);
+            padding: 70px 0 30px;
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-logo {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 20px;
+            display: inline-block;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .footer-logo span {
+            color: var(--primary-light);
+        }
+
+        .footer-text {
+            color: #bae6fd;
+            line-height: 1.7;
+            font-weight: 300;
+            max-width: 400px;
+        }
+
+        .footer-links h4 {
+            font-size: 1.25rem;
+            margin-bottom: 25px;
+            color: var(--primary-light);
+            font-weight: 600;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: #e0f2fe;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 300;
+        }
+
+        .footer-links a:hover {
+            color: #ffffff;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #7dd3fc;
+            font-size: 0.95rem;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .advanced-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .section-title {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .advanced-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .page-header {
+                padding: 120px 0 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">Kun<span>ming</span></a>
+            <ul class="nav-links">
+                <li><a href="welcome.html">Welcome</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="attraction.html" class="active">Attractions</a></li>
+                <li><a href="food.html">Cuisine</a></li>
+
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="page-blob"></div>
+        <div class="container">
+            <h1 class="section-title">Magnificent Spots</h1>
+            <p class="section-subtitle">A curated guide to 6 breathtaking destinations</p>
+        </div>
+    </header>
+
+    <!-- Main Attractions Grid -->
+    <section class="attractions-list-section">
+        <div class="container">
+            <div class="advanced-grid">
+
+                <!-- Attraction 1 -->
+                <div class="tour-card">
+                    <div class="tour-image-container">
+                        <img src="./images/i5.jpg" alt="The Stone Forest" class="tour-image">
+                    </div>
+                    <div class="tour-content">
+                        <span class="tour-tag">UNESCO Site</span>
+                        <h3 class="tour-title">The Stone Forest</h3>
+                        <p class="tour-desc">A spectacular set of limestone formations located in Shilin County. It
+                            features a mesmerizing maze of towering, needle-like limestone pillars that closely resemble
+                            a massive petrified forest, offering a surreal hiking experience.</p>
+                        <div class="tour-footer">
+                            <span class="tour-location">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                                Shilin County
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attraction 2 -->
+                <div class="tour-card">
+                    <div class="tour-image-container">
+                        <img src="./images/i6.jpg" alt="Dianchi Lake" class="tour-image">
+                    </div>
+                    <div class="tour-content">
+                        <span class="tour-tag">Nature</span>
+                        <h3 class="tour-title">Dianchi Lake</h3>
+                        <p class="tour-desc">Widely honored as the "Pearl of the Plateau," this immense freshwater lake
+                            stretches across the city edge. It offers stunning sunset perspectives and serves as a vital
+                            winter sanctuary for tens of thousands of beautiful Siberian red-billed seagulls.</p>
+                        <div class="tour-footer">
+                            <span class="tour-location">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                                Southwest Kunming
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attraction 3 -->
+                <div class="tour-card">
+                    <div class="tour-image-container">
+                        <img src="./images/i7.jpg" alt="Green Lake Park" class="tour-image">
+                    </div>
+                    <div class="tour-content">
+                        <span class="tour-tag">Urban Oasis</span>
+                        <h3 class="tour-title">Green Lake Park</h3>
+                        <p class="tour-desc">Cuihu Park is a tranquil urban sanctuary featuring emerald waters, seasonal
+                            blooming lotuses, and intricately designed classical pavilions. It perfectly encapsulates
+                            the relaxed, leisurely, and artistic lifestyle of local Kunming residents.</p>
+                        <div class="tour-footer">
+                            <span class="tour-location">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                                City Center
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attraction 4 -->
+                <div class="tour-card">
+                    <div class="tour-image-container">
+                        <img src="./images/i8.jpg" alt="Western Hills" class="tour-image">
+                    </div>
+                    <div class="tour-content">
+                        <span class="tour-tag">Mountain Peak</span>
+                        <h3 class="tour-title">Western Hills</h3>
+                        <p class="tour-desc">Affectionately termed the "Sleeping Beauty" due to their skyline
+                            silhouette. Xi Shan offers a dense, lush forested escape and a steep cliffside Dragon Gate,
+                            giving visitors a majestic panoramic view of the entire Dianchi Lake.</p>
+                        <div class="tour-footer">
+                            <span class="tour-location">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                                Xishan District
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attraction 5 -->
+                <div class="tour-card">
+                    <div class="tour-image-container">
+                        <img src="./images/i9.jpg" alt="Yuantong Temple" class="tour-image">
+                    </div>
+                    <div class="tour-content">
+                        <span class="tour-tag">Historical</span>
+                        <h3 class="tour-title">Yuantong Temple</h3>
+                        <p class="tour-desc">With a history spanning over 1,200 years, this is the grandest and most
+                            indispensable Buddhist temple in Kunming. It distinctively features a massive pond at its
+                            center and elegantly blends architectural styles from various Chinese dynasties.</p>
+                        <div class="tour-footer">
+                            <span class="tour-location">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                                Yuantong Street
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attraction 6 -->
+                <div class="tour-card">
+                    <div class="tour-image-container">
+                        <img src="./images/i10.jpg" alt="Dongchuan Red Land" class="tour-image">
+                    </div>
+                    <div class="tour-content">
+                        <span class="tour-tag">Photography</span>
+                        <h3 class="tour-title">Dongchuan Red Land</h3>
+                        <p class="tour-desc">Famed among photographers worldwide, this rural area showcases a visually
+                            striking and wildly colorful landscape of vivid red earth, terraced into dramatic
+                            geographical patterns alongside bright green agricultural crops.</p>
+                        <div class="tour-footer">
+                            <span class="tour-location">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                                Dongchuan District
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Bottom Navigation (Footer) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="index.html" class="footer-logo">Kun<span>ming</span></a>
+                    <p class="footer-text">Experience the eternal spring, embrace the incredibly rich cultural tapestry,
+                        and safely discover the awe-inspiring natural wonders of Yunnan's magnificent and diverse
+                        capital.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Nav</h4>
+                    <ul>
+                        <li><a href="welcome.html">Welcome Page</a></li>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="attraction.html">Attractions</a></li>
+                        <li><a href="food.html">Cuisine</a></li>
+
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Official Travel Guide</a></li>
+                        <li><a href="#">Tourist Support</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 Discover Kunming. All Rights Reserved. Designed with Light Blue Aesthetic.
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
