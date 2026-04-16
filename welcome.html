@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1LG0E4XGS1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1LG0E4XGS1');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Kunming</title>
+    <style>
+        /* Import Google Font for a modern and elegant look */
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Outfit', sans-serif;
+            background-color: #f0f9ff;
+        }
+
+        .welcome-wrap {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Light blue gradient overlay over the background image */
+            background:
+                linear-gradient(135deg, rgba(224, 242, 254, 0.4) 0%, rgba(186, 230, 253, 0.5) 100%),
+                url('./images/1.jpg') center/cover no-repeat;
+        }
+
+        /* Ambient floating light shapes */
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            z-index: 1;
+            animation: float 10s infinite alternate ease-in-out;
+            pointer-events: none;
+        }
+
+        .shape-1 {
+            width: 500px;
+            height: 500px;
+            background: #7dd3fc;
+            top: -150px;
+            left: -100px;
+            opacity: 0.6;
+        }
+
+        .shape-2 {
+            width: 600px;
+            height: 600px;
+            background: #bae6fd;
+            bottom: -200px;
+            right: -100px;
+            opacity: 0.7;
+            animation-duration: 12s;
+            animation-direction: alternate-reverse;
+        }
+
+        /* Glassmorphism Panel */
+        .glass-panel {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 800px;
+            padding: 4.5rem 3.5rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 30px 60px -15px rgba(2, 132, 199, 0.2);
+            animation: scaleIn 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .subtitle {
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-size: 1.1rem;
+            color: #0284c7;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        .title {
+            color: #0c4a6e;
+            font-size: 5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+
+        .description {
+            color: #0369a1;
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-bottom: 3.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+            animation: fadeIn 1s ease-out 0.7s both;
+        }
+
+        .btn-wrapper {
+            position: relative;
+            display: inline-block;
+            animation: fadeInUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.9s both;
+        }
+
+        .enter-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px 45px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #ffffff;
+            text-decoration: none;
+            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            box-shadow: 0 15px 30px -5px rgba(2, 132, 199, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .enter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+
+        .enter-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -5px rgba(2, 132, 199, 0.6);
+        }
+
+        .enter-btn:hover::before {
+            left: 100%;
+        }
+
+        .icon-arrow {
+            margin-left: 12px;
+            transition: transform 0.4s ease;
+        }
+
+        .enter-btn:hover .icon-arrow {
+            transform: translateX(6px);
+        }
+
+        /* Keyframes */
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.92) translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(40px, -40px);
+            }
+        }
+
+        /* Responsive Design Adjustments */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 3.5rem;
+            }
+
+            .glass-panel {
+                padding: 3rem 1.5rem;
+            }
+
+            .description {
+                font-size: 1.05rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .enter-btn {
+                padding: 15px 35px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="welcome-wrap">
+        <!-- Floating abstract shapes for background depth -->
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+
+        <div class="glass-panel">
+            <div class="subtitle">The City of Eternal Spring</div>
+            <h1 class="title">Discover Kunming</h1>
+            <p class="description">
+                Experience the perfect blend of natural wonders, vibrant culture, and pleasant climate. Immerse yourself
+                in the breathtaking charm of Yunnan's majestic capital.
+            </p>
+
+            <div class="btn-wrapper">
+                <a href="index.html" class="enter-btn">
+                    Start Exploring
+                    <svg class="icon-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
